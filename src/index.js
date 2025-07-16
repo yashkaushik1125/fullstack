@@ -1,6 +1,4 @@
 import express from 'express'
-
-
 import connectDB from './db/index.js'
 import dotenv from 'dotenv'
 import { app } from './app.js'
@@ -9,8 +7,9 @@ dotenv.config({
 })
 
 
-connectDB().then(()=>{app.listen(process.env.PORT),(msg)=>console.log(`hello db connected ${msg}`);
-}).catch((err)=>console.error(err))
+connectDB()
+.then(()=>{app.listen(process.env.PORT),(msg)=>{console.log(`hello db connected ${msg}`)}})
+.catch((err)=>console.log(err))
 
 
 
