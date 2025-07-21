@@ -7,7 +7,7 @@ dotenv.config({
 })
 
 
-connectDB().then(()=>{app.listen(process.env.PORT||8000,(msg)=>{console.log(`hello db connected at 8000 ${msg}`)})})
+connectDB().then(()=>{app.listen(process.env.PORT||8000,(msg)=>{console.log(`hello db connected at ${process.env.PORT} ${msg}`)})})
 .catch((err)=>console.log(err))
 
 
