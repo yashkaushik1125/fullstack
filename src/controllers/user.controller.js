@@ -5,6 +5,28 @@ import { uploadCloudinary } from "../utils/cloudinary.js";
 import { apiResponse } from "../utils/apiResponse.js";
 
 
+const genrateAccessrefreshToken = async (userID)=>{
+    try {
+        const user = await User.findById(userID)
+        const accessToken = user.genrateAccessToken()
+        const refreshToken = user.genrateRefreshToken()
+
+        user.refreshToken= refreshToken
+        user.accessToken=accessToken
+
+        await user.save({validateBeforeSave:false})
+
+        return {accessToken,refreshToken}
+
+    } catch (error) {
+        throw new ApiError(505,'something went wrong  Access not genrated')
+        
+    }
+
+}
+
+
+
 const registerUser = asynchandler(async (req, res)=>{
     const {email , fullName , username , password }=req.body
    //
@@ -48,4 +70,37 @@ const registerUser = asynchandler(async (req, res)=>{
     
 })
 
-export {registerUser}
+
+const loginUser = asynchandler(async (req, res) => {
+
+    const { email, password , username } = req.body;
+    if(!username||!email)
+        throw new ApiError(400,'Email or username is required')
+
+    const isPresent = await User.findOne({$or:[{email},{username}]})
+    if(!isPresent) throw new ApiError(404,'user doesnot exist')
+
+    const isPasswordCorrect= await isPresent.isPasswordCorrect(password)
+    if(!isPasswordCorrect) throw new ApiError(404, 'wrong Password')
+        
+    const { accessToken , refreshToken } =await genrateAccessrefreshToken(isPresent._id)
+
+    const loggedInUser = User.findById(isPresent._id).select("-password -refreshToken")
+
+    const options = {
+        httpOnly= true,
+        secure = true
+    }
+    return res.status(200).cookie("accessToken",accessToken, options).cookie("refrehToken",refreshToken,options)
+    .json(new apiResponse(200,{
+        isPresent: loggedInUser accessToken, refreshToken
+    },
+    "UserLoggedIn Success" 
+))
+
+    
+})
+
+
+
+export {registerUser, loginUser};
