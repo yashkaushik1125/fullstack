@@ -70,7 +70,7 @@ const registerUser = asynchandler(async (req, res) => {
 });
 
 const loginUser = asynchandler(async (req, res) => {
-  console.log(req.body);
+  console.log(req.body , "user: ",req.user);
   const { email, password, username } = req.body;
   if (!username && !email)
     throw new ApiError(400, "Email or username is required");
@@ -154,6 +154,22 @@ const refreshAccessToken = asynchandler(async (req,res)=>{
  .cookie('refreshToken',newrefreshToken,options)
  .json(new apiResponse(200,{accessToken,newrefreshToken},"accessTokenRefreshed"))
  
+
+})
+
+const changeCurrentPassword = asynchandler(async (req,res)=>{
+
+  const {oldPassword,newPassword} = req.body
+  const user = await User.findById(req.user?._id)
+  const isPasswordCorrect =await user.isPasswordCorrect(oldPassword)
+  if(!isPasswordCorrect) throw new ApiError(401,"incorrect password")
+  
+  user.password= newPassword
+  await user.save({validateBeforeSave:false})
+
+  return res
+        .status(200)
+        .json(new apiResponse(200,"Password changes succesfuly"))
 
 })
 export { registerUser, loginUser, logoutUser, refreshAccessToken };
