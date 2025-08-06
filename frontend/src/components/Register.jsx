@@ -10,6 +10,11 @@ function Register() {
   const [avtar,setAvtar] =useState()
   const [coverImage,setCoverImage]=useState()
   const [user,setUser]= useState({})
+  const [formData, setFormData] = useState({
+      fullName: '',
+      email: '',
+      password: '',
+    });
 
   const reqHit = async ()=>{
     preventDefault()
