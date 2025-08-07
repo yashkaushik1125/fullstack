@@ -1,6 +1,5 @@
 {
   "name": "fullstack-project",
-  
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -23,7 +22,7 @@
     "multer": "^2.0.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.10",
     "prettier": "^3.5.3"
   }
 }

@@ -7,15 +7,15 @@ import SuccessRegister from "./components/SuccessRegister.jsx";
 import Login from "./components/Login.jsx";
 
 const router = createBrowserRouter([
-  { path:'',
+  { path:'/',
     element:<App/>,
     children:[
       {
       path:'/registeredSuccesfully',
-      element:<SuccessRegister/>
+      element:<SuccessRegister/>,
       },
       {
-        path:'/login',
+        path:'login',
         element:<Login/>
       }
     ]

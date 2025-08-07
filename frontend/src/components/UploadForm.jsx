@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import bg from '../assets/bg.png'
 import logo from '../assets/logo.png'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,NavLink , Link } from 'react-router-dom';
 import SuccessRegister from './SuccessRegister';
 
 const UploadForm = () => {
@@ -65,7 +65,7 @@ useEffect(()=>{
 
 
   return (
-   <div>
+   user.message?<SuccessRegister/>:<div>
          <div className="bg">
            <div className="center">
                <div className="inner-img">
@@ -74,58 +74,70 @@ useEffect(()=>{
    
                <form className="form"  method='POST'>
 
-          <div>
-             <label>Full Name:</label>       
-          <input
-           type="text"
-           name="fullName"
-           value={formData.fullName}
-           onChange={handleChange}
-           required
-         />
+          <div className='flex w-full mb-12 '>
+             <div className='w-2/6 '>
+                 <label>Full Name:</label>   
+              </div>    
+              <div className='h-full w-full  flex justify-center '>
+                 <input
+                 className=''
+                  type="text"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  required
+                 />
+              </div>
             </div>
-         <br />
-          <div>
-            <label>Email:</label>
-         <input
+         
+          <div className='flex w-full mb-120'>
+           <div className='w-2/6'> <label>Email:</label></div>
+        <div className='h-full w-full  flex justify-center '> <input
            type="email"
            name="email"
            
            value={formData.email}
            onChange={handleChange}
            required
-         />
+         /></div>
             </div>
-         <br />
-         <div>
-            <label>Username:</label>
-         <input
+         
+         <div className='flex w-full mb-12'>
+           <div className='w-2/6'> <label>Username:</label></div>
+         <div className='h-full w-full  flex justify-center '><input
            type="text"
            name="username"
            
            value={formData.username}
            onChange={handleChange}
            required
-         />
+         /></div>
             </div>
-         <br />
+         
    
-        <div>
-          <label>Password:</label>
-         <input
+        <div className='flex w-full mb-12'>
+         <div className='w-2/6'>
+           <label>Password:</label>
+         </div>
+         <div className='h-full w-full  flex justify-center '>
+          <input
            type="password"
            name="password"
            value={formData.password}
            onChange={handleChange}
            required
          />
+         </div>
          
         </div>
-        <br />
+        
    
-        <div>
-           <label>Cover Image:</label>
-         <input
+        <div className='flex w-full mb-12'>
+           <div className='w-2/6'>
+            <label>Cover Image:</label>
+           </div>
+         <div className='h-full w-full  flex justify-center '>
+          <input
          className='text-gray-500'
            type="file"
            name="coverImage"
@@ -133,12 +145,16 @@ useEffect(()=>{
            onChange={handleFileChange}
            required
          />
+         </div>
         </div>
-         <br />
+         
    
-        <div>
-           <label>Avatar:</label>
-         <input
+        <div className='flex w-full mb-12'>
+           <div className='w-2/6'>
+            <label>Avatar:</label>
+           </div>
+         <div className='h-full w-full  flex justify-center '>
+          <input
          className='text-gray-500'
            type="file"
            name="avtar"
@@ -146,12 +162,17 @@ useEffect(()=>{
            onChange={handleFileChange}
            required
          />
+         </div>
         </div>
-         <br />
+         
    
          <button type="submit" id='submit' onClick={handleSubmit}>Submit</button>
                        
                  </form>
+                 <div className='absolute flex w-full right-0 text-sm bottom-0 '>
+                    Alreafy Registered? <div className='bg-purple-800 w-1/5 text-center rounded-2xl'> <Link to={'/login'} className=' pl-1 pr-1 text-sm text-sm text-white rounded-2xl' >Login Here</Link>
+</div>
+                 </div>
                </div>
                 
                        
@@ -159,10 +180,10 @@ useEffect(()=>{
            </div>
    
              <div className="footer">
-                   <div className="innerelem">
+                  
                    
-                       <div> Powered by OneLogin &emsp;&emsp; Terms &emsp;&emsp; Privacy Policy</div>
-                  </div>
+                       <div className='flex justify-evenly'> <div>Powered by OneLogin</div> <div>Terms </div>   <div>Privacy Policy</div></div>
+                  
             </div>
    
    
