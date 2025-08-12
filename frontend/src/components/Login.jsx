@@ -45,7 +45,7 @@ function Login() {
    const stringData=formData.toLocaleString()
 
     try {
-      const response = await fetch(`http://http://3.145.123.96:3000/api/v1/users/login`, {
+      const response = await fetch(`http://3.145.123.96:3000/api/v1/users/login`, {
         method: 'POST',
         headers:{"Content-Type": "application/json"},
         body: JSON.stringify(formData),
