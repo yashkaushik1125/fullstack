@@ -2,16 +2,22 @@ import React, { useEffect, useState } from 'react';
 import bg from '../assets/bg.png'
 import logo from '../assets/logo.png'
 import { useNavigate ,NavLink , Link } from 'react-router-dom';
-import SuccessRegister from './SuccessRegister';
+
+import {TailSpin } from 'react-loader-spinner'
 
 const UploadForm = () => {
-  const [user,setUser] = useState({})
+  const [user,setUser] = useState()
+  const [loading,setLoading]=useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     password: '',
     username:'',
   });
+
+
+
+
 
   const [coverImage, setCoverImage] = useState(null);
   const [avtar, setAvtar] = useState(null);
@@ -22,6 +28,8 @@ const UploadForm = () => {
       [e.target.name]: e.target.value,
     }));
   };
+
+
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
@@ -34,6 +42,7 @@ const UploadForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
 
     const data = new FormData();
     data.append('fullName', formData.fullName);
@@ -42,30 +51,39 @@ const UploadForm = () => {
     data.append('username',formData.username)
     data.append('coverImage', coverImage);
     data.append('avtar', avtar);
+    console.log(data);
+    
 
     try {
       const response = await fetch('http://localhost:3000/api/v1/users/register', {
         method: 'POST',
         body: data,
-      }).then((e)=>e.json()).then((e)=>setUser(e)).catch((error)=>console.log(error)
-      )
-
+      }).then((res)=>res.json())
+      .then((e)=>{setUser(e);setLoading(false);})
+      .catch((error)=>console.log(error))
       
-      
-      console.log('Server Response:', user);
     } catch (error) {
       console.error('Upload Error:', error);
     }
-  };
-  const navigate=useNavigate()
-useEffect(()=>{
-  if(user.message)
-    navigate('/registeredSuccesfully',{state:{user}})    
-},[user])
+    finally{
+      console.log(user);
+      
+      if(user.status>=500)
+        alert('internal server error')
+      else if(user.status==200)
+        alert(user.message)
+      else if(user.success==true)
+        alert(user.data)
+      else if(user.success==false)
+        alert(user.message)
+    }
+  }
+ 
+
 
 
   return (
-   user.message?<SuccessRegister/>:<div>
+   <div>
          <div className="bg">
            <div className="center">
                <div className="inner-img">
@@ -166,7 +184,14 @@ useEffect(()=>{
         </div>
          
    
-         <button type="submit" id='submit' onClick={handleSubmit}>Submit</button>
+         <button type="submit" id='submit' className='flex justify-center' onClick={handleSubmit}>
+          {loading?
+          <TailSpin
+          height={10}
+          width={10}
+          color='white'/>
+          :'Submit'}
+         </button>
                        
                  </form>
                  <div className='absolute flex w-full right-0 text-sm bottom-0 '>

@@ -4,6 +4,8 @@ import { User } from "../models/user.model.js";
 import { uploadCloudinary } from "../utils/cloudinary.js";
 import { apiResponse } from "../utils/apiResponse.js";
 import jwt from 'jsonwebtoken'
+import bodyParser from "body-parser";
+
 
 const genrateAccessrefreshToken = async (userID) => {
   try {
@@ -70,6 +72,7 @@ const registerUser = asynchandler(async (req, res) => {
 });
 
 const loginUser = asynchandler(async (req, res) => {
+
   console.log(req.body , "user: ",req.user);
   const { email, password, username } = req.body;
   if (!username && !email)
@@ -91,7 +94,7 @@ const loginUser = asynchandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: true,
+    
   };
   const responseObj = {
     isPresent: loggedInUser,
@@ -113,6 +116,8 @@ const loginUser = asynchandler(async (req, res) => {
 });
 
 const logoutUser = asynchandler(async (req, res) => {
+  console.log(req.user);
+  
   await User.findByIdAndUpdate(req.user._id, {
     $set: {
       refreshToken: undefined,
@@ -121,14 +126,14 @@ const logoutUser = asynchandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: true,
+    
   };
   try {
     return res
       .status(200)
       .clearCookie("accessToken", options)
       .clearCookie("refreshToken", options)
-      .send(new apiResponse(200, "Loggedut Success"));
+      .send(new apiResponse(200, "Loggeout Success"));
   } catch (error) {
     console.log(error);
   }

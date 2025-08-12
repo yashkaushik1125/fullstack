@@ -7,6 +7,12 @@ import {
 } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
+import bodyParser from "body-parser";
+
+
+const jsonParser = bodyParser.json()
+const formParser = bodyParser.raw()
+
 
 const router = Router();
 
@@ -24,7 +30,7 @@ router.route("/register").post(
   registerUser
 );
 
-router.route("/login").post(loginUser);
+router.route("/login").post(jsonParser,loginUser);
 router.route('/refresh-token').post(refreshAccessToken)
 
 router.route("/logout").post(verifyJWT, logoutUser);
