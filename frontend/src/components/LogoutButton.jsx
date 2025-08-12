@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { TailSpin } from "react-loader-spinner";
+import {ClipLoader} from 'react-spinners'
 export default function LogoutButton({setUser}) {
   
   const navigate = useNavigate();

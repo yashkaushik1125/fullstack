@@ -3,7 +3,7 @@ import bg from '../assets/bg.png'
 import logo from '../assets/logo.png'
 import { useNavigate ,NavLink , Link } from 'react-router-dom';
 
-import {TailSpin } from 'react-loader-spinner'
+import {ClipLoader} from 'react-spinners'
 
 const UploadForm = () => {
   const [user,setUser] = useState()
@@ -186,10 +186,7 @@ const UploadForm = () => {
    
          <button type="submit" id='submit' className='flex justify-center' onClick={handleSubmit}>
           {loading?
-          <TailSpin
-          height={10}
-          width={10}
-          color='white'/>
+         <ClipLoader/>
           :'Submit'}
          </button>
                        

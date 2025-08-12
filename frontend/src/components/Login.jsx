@@ -1,7 +1,7 @@
 import React , {use, useEffect, useState} from 'react'
 import {NavLink} from 'react-router-dom'
 import LogoutButton from './LogoutButton'
-import { TailSpin } from 'react-loader-spinner'
+import {ClipLoader} from 'react-spinners'
 
 function Login() {
   
@@ -109,11 +109,7 @@ function Login() {
         <button type="submit"  className=' w-full  flex justify-center  text-center text-white rounded-sm' onClick={handleSubmit}>
          <div className='w-2/6 rounded-sm flex justify-center bg-green-700'>
            {loading?
-          <TailSpin 
-          className='text-center'
-          height={20}
-          width={20}
-          color='white'/>
+          <ClipLoader/>
           :'Submit'}
          </div>
          </button>
