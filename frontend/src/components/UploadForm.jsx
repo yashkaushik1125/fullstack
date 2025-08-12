@@ -55,7 +55,7 @@ const UploadForm = () => {
     
 
     try {
-      const response = await fetch('http://localhost:3000/api/v1/users/register', {
+      const response = await fetch(`${process.env.REGISTER_USER}/api/v1/users/register`, {
         method: 'POST',
         body: data,
       }).then((res)=>res.json())

@@ -6,7 +6,7 @@ export default function LogoutButton({setUser}) {
 
   const handleLogout = async (e) => {
     e.preventDefault();
-    await fetch("http://localhost:3000/api/v1/users/logout", {
+    await fetch(`${process.env.LOGOUT_USER}/api/v1/users/logout`, {
       method: "POST",
       credentials: "include"
     }).then((e)=>e.json()).then((e)=>alert(e.message)).then(setUser({}))
