@@ -140,7 +140,7 @@ const logoutUser = asynchandler(async (req, res) => {
 });
 
 const refreshAccessToken = asynchandler(async (req,res)=>{
-  const incomingRefreshToken =   req.cokies.refreshToken || req.body.refreshToken
+  const incomingRefreshToken =   req.cookies.refreshToken || req.body.refreshToken
   if(!incomingRefreshToken)
     throw new ApiError(401 , 'Unauthorised baby')
   const decodedToken = jwt.verify(incomingRefreshToken,process.env.REFRESH_TOKEN_SECRET)
@@ -177,4 +177,16 @@ const changeCurrentPassword = asynchandler(async (req,res)=>{
         .json(new apiResponse(200,"Password changes succesfuly"))
 
 })
-export { registerUser, loginUser, logoutUser, refreshAccessToken };
+
+const loginWithAccessToken = asynchandler(async(req,res)=>{
+  const user = req.user
+  console.log('user  from cookies :', user);
+  
+  if(user)
+    return res.status(200).json(new apiResponse(200,user,'logged in using access token'))
+  else
+    throw new ApiError(400, 'internal server error ,please login again')
+            
+
+}) 
+export { registerUser, loginUser, logoutUser, refreshAccessToken , loginWithAccessToken};

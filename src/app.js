@@ -6,8 +6,9 @@ import bodyParser from 'body-parser'
 const app = express()
 
 app.use(cors({
-    origin: 'https://fullstack-three-sigma.vercel.app/',
+    origin: 'http://localhost:5173',
     credentials:true
+
     
 }))
 

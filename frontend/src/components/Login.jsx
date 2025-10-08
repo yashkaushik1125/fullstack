@@ -18,7 +18,10 @@ function Login() {
     if (user) {
       if (user.status >= 500) window.alert(user.message);
       if (user.success == false) window.alert(user.message);
-      if (user.success == true) window.alert(user.data);
+      if (user.success == true){
+        window.localStorage.setItem('user',user)
+        
+      }
     }
   }, [user]);
 
@@ -114,7 +117,7 @@ function Login() {
             <div className="flex max-w-1/2 text-sm">
               New User? &nbsp;{" "}
               <div className=" w-2/5 text-center bg-purple-600 rounded-md">
-                <NavLink to={"/"} className=" text-white w-full p-3 ">
+                <NavLink to={"/register"} className=" text-white w-full p-3 ">
                   Register Here
                 </NavLink>
               </div>
